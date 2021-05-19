@@ -1,5 +1,4 @@
 extern crate clap;
-
 use std::io;
 
 // cli
@@ -15,10 +14,10 @@ fn main() -> Result<(), io::Error> {
 
     let file = matches
         .value_of("trace")
-        .unwrap_or("../libmseed-sys/tests/sample.miniseed");
-    trace::read_mseed(&file);
+        .unwrap_or("tests/test.mseed");
 
-    tui::start();
+    let data = trace::read_mseed(&file);
+    tui::start(&data);
 
     Ok(())
 }
