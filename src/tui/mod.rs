@@ -63,9 +63,15 @@ pub(crate) fn start(data: &[(f64, f64)]) -> Result<(), Box<dyn Error>> {
                         .style(Style::default().fg(Color::Gray))
                         .bounds([xmin, xmax])
                         .labels(vec![
-                            Span::styled(format!("{}", xmin), Style::default().add_modifier(Modifier::BOLD)),
-                            Span::raw(format!("{}", xmin + (xmax-xmin)/2.)),
-                            Span::styled(format!("{}", xmax), Style::default().add_modifier(Modifier::BOLD)),
+                            Span::styled(
+                                format!("{}", xmin),
+                                Style::default().add_modifier(Modifier::BOLD),
+                            ),
+                            Span::raw(format!("{}", xmin + (xmax - xmin) / 2.)),
+                            Span::styled(
+                                format!("{}", xmax),
+                                Style::default().add_modifier(Modifier::BOLD),
+                            ),
                         ]),
                 )
                 .y_axis(
@@ -74,9 +80,15 @@ pub(crate) fn start(data: &[(f64, f64)]) -> Result<(), Box<dyn Error>> {
                         .style(Style::default().fg(Color::Gray))
                         .bounds([ymin, ymax])
                         .labels(vec![
-                            Span::styled(format!("{}", ymin), Style::default().add_modifier(Modifier::BOLD)),
-                            Span::raw(format!("{}", ymin + (ymax-ymin)/2.)),
-                            Span::styled(format!("{}", ymax),Style::default().add_modifier(Modifier::BOLD)),
+                            Span::styled(
+                                format!("{}", ymin),
+                                Style::default().add_modifier(Modifier::BOLD),
+                            ),
+                            Span::raw(format!("{}", ymin + (ymax - ymin) / 2.)),
+                            Span::styled(
+                                format!("{}", ymax),
+                                Style::default().add_modifier(Modifier::BOLD),
+                            ),
                         ]),
                 );
             f.render_widget(chart, chunks[0]);
