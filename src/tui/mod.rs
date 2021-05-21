@@ -13,10 +13,7 @@ use tui::{
     widgets::{Axis, Block, Borders, Chart, Dataset, GraphType},
     Terminal,
 };
-use util::{
-    event::{Event, Events},
-    SinSignal,
-};
+use util::event::{Event, Events};
 
 pub(crate) fn start(trace: &Trace) -> Result<(), Box<dyn Error>> {
     // Terminal initialization

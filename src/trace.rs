@@ -44,9 +44,7 @@ impl Trace {
 
         trace
     }
-
 }
-
 
 #[cfg(test)]
 mod tests {
