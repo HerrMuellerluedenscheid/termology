@@ -14,3 +14,4 @@ clap = {version = "~2.27.0", features = ["yaml"]}
 tui = "0.15"
 termion = { version = "1.5", optional = true }
 rand = "0.8"
+chrono = "0.4.19"

@@ -1,6 +1,7 @@
-#[allow(dead_code)]
+#![allow(dead_code)]
 mod util;
 
+use crate::trace::Trace;
 use std::{error::Error, io};
 use termion::{event::Key, input::MouseTerminal, raw::IntoRawMode, screen::AlternateScreen};
 use tui::{
@@ -17,7 +18,7 @@ use util::{
     SinSignal,
 };
 
-pub(crate) fn start(data: &[(f64, f64)]) -> Result<(), Box<dyn Error>> {
+pub(crate) fn start(trace: &Trace) -> Result<(), Box<dyn Error>> {
     // Terminal initialization
     let stdout = io::stdout().into_raw_mode()?;
     let stdout = MouseTerminal::from(stdout);
@@ -27,10 +28,11 @@ pub(crate) fn start(data: &[(f64, f64)]) -> Result<(), Box<dyn Error>> {
 
     let events = Events::new();
 
-    let ymin = -400000.;
-    let ymax = 300000.;
-    let xmin = 0.;
-    let xmax = 130.;
+    let ymin = &trace.ymin();
+    let ymax = &trace.ymax();
+    let xmin = 0.0;
+    let xmax = trace.xdata.len() as f64;
+    let data = &trace.xydata();
 
     loop {
         terminal.draw(|f| {
@@ -45,7 +47,7 @@ pub(crate) fn start(data: &[(f64, f64)]) -> Result<(), Box<dyn Error>> {
                 .marker(symbols::Marker::Braille)
                 .style(Style::default().fg(Color::Yellow))
                 .graph_type(GraphType::Line)
-                .data(&data)];
+                .data(data)];
             let chart = Chart::new(datasets)
                 .block(
                     Block::default()
@@ -64,12 +66,11 @@ pub(crate) fn start(data: &[(f64, f64)]) -> Result<(), Box<dyn Error>> {
                         .bounds([xmin, xmax])
                         .labels(vec![
                             Span::styled(
-                                format!("{}", xmin),
+                                format!("{}", &trace.tmin()),
                                 Style::default().add_modifier(Modifier::BOLD),
                             ),
-                            Span::raw(format!("{}", xmin + (xmax - xmin) / 2.)),
                             Span::styled(
-                                format!("{}", xmax),
+                                format!("{}", &trace.tmax()),
                                 Style::default().add_modifier(Modifier::BOLD),
                             ),
                         ]),
@@ -78,7 +79,7 @@ pub(crate) fn start(data: &[(f64, f64)]) -> Result<(), Box<dyn Error>> {
                     Axis::default()
                         .title("A")
                         .style(Style::default().fg(Color::Gray))
-                        .bounds([ymin, ymax])
+                        .bounds([*ymin, *ymax])
                         .labels(vec![
                             Span::styled(
                                 format!("{}", ymin),
