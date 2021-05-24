@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 mod util;
 
-use crate::trace::Trace;
+use crate::trace::{Trace, Input};
 use std::{error::Error, io};
 use termion::{event::Key, input::MouseTerminal, raw::IntoRawMode, screen::AlternateScreen};
 use tui::{
@@ -15,7 +15,7 @@ use tui::{
 };
 use util::event::{Event, Events};
 
-pub(crate) fn start(trace: &Trace) -> Result<(), Box<dyn Error>> {
+pub(crate) fn start(input: Input) -> Result<(), Box<dyn Error>> {
     // Terminal initialization
     let stdout = io::stdout().into_raw_mode()?;
     let stdout = MouseTerminal::from(stdout);
@@ -25,6 +25,10 @@ pub(crate) fn start(trace: &Trace) -> Result<(), Box<dyn Error>> {
 
     let events = Events::new();
 
+    let traces = input.traces();
+    let x = &traces[0];
+
+    let trace = &traces[0];
     let ymin = &trace.ymin();
     let ymax = &trace.ymax();
     let xmin = 0.0;

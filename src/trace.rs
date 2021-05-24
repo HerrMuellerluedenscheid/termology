@@ -1,5 +1,25 @@
 use chrono::{DateTime, Utc};
-use miniseed::ms_record;
+use miniseed::{ms_record, ms_input};
+
+pub struct Input {
+    input: ms_input
+}
+
+impl Input {
+    pub fn traces(self) -> Vec<Trace> {
+        let mut output = Vec::new();
+        for inp in self.input {
+            let itr = Trace::read(inp);
+            output.push(itr);
+        }
+        output
+    }
+
+    pub fn read(filename: &str) -> Input {
+        let input = ms_input::open(&filename);
+        Input { input }
+    }
+}
 
 #[derive(Debug)]
 pub struct Trace {
@@ -33,11 +53,10 @@ impl Trace {
         self.rec.end()
     }
 
-    pub fn read_mseed(file: &str) -> Trace {
-        let rec = ms_record::read(file);
-        let ydata_i32 = rec.data_i32().to_owned();
+    pub fn read(rec: ms_record) -> Trace {
+        let ydata_i32 = rec.data_i32().clone();
 
-        let ydata: Vec<f64> = ydata_i32.into_iter().map(|x| x as f64).collect();
+        let ydata: Vec<f64> = ydata_i32.into_iter().map(|x| *x as f64).collect();
         let xdata: Vec<f64> = (0..ydata.len()).map(|x| x as f64).collect();
 
         let trace = Trace { rec, xdata, ydata };
@@ -48,12 +67,15 @@ impl Trace {
 
 #[cfg(test)]
 mod tests {
-    use crate::trace::Trace;
+    use crate::trace::{Trace, Input};
+    use miniseed::ms_input;
 
     #[test]
-    fn load_mseed() {
+    fn test_input() {
         let file = "tests/test.mseed";
-        let trace = Trace::read_mseed(&file);
-        println!("{}", trace.tmin())
+        let inp = Input::read(file);
+        let trs = inp.traces();
+        let x = &trs[0];
+
     }
 }

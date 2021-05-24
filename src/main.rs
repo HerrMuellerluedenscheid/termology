@@ -10,7 +10,7 @@ mod tui;
 
 use log::{info, warn, LevelFilter};
 use simplelog::{ColorChoice, Config, TermLogger, TerminalMode};
-use trace::Trace;
+use trace::Input;
 
 fn main() -> Result<(), io::Error> {
     TermLogger::init(
@@ -27,8 +27,9 @@ fn main() -> Result<(), io::Error> {
     let file = matches.value_of("FILENAME").unwrap();
 
     info!("Loading file {}", file);
-    let trace = Trace::read_mseed(&file);
-    tui::start(&trace);
+    let input = Input::read(file);
+
+    tui::start(input);
 
     Ok(())
 }
