@@ -3,9 +3,6 @@ version: "1.0"
 author: Marius K. <marius.kriegerowski@gmail.com>
 about: Read traces
 args:
-    - config:
-        short: t
-        long: trace
-        value_name: FILE
-        help: read a trace file
-        takes_value: true
+    - FILENAME:
+        required: true
+        index: 1
