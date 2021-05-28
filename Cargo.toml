@@ -1,7 +1,13 @@
 [package]
 name = "termology"
+authors = ["Marius Kriegerowski"]
+homepage = "https://github.com/HerrMuellerluedenscheid/termology"
 version = "0.1.1"
 edition = "2018"
+license-file = "LICENSE.txt"
+keywords = ["seismology", "tui"]
+categories = ["science"]
+exclude = ["tests/*.mseed"]
 
 [features]
 default = ["termion"]
@@ -15,3 +21,6 @@ rand = "0.8"
 chrono = "0.4.19"
 log = "0.4"
 simplelog = "0.10.0"
+
+[badges]
+maintenance = { status = "experimental"}
