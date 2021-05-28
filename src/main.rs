@@ -8,7 +8,7 @@ use clap::App;
 mod trace;
 mod tui;
 
-use log::{info, warn, LevelFilter};
+use log::{info, LevelFilter};
 use simplelog::{ColorChoice, Config, TermLogger, TerminalMode};
 use trace::Input;
 

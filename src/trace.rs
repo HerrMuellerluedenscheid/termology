@@ -1,8 +1,8 @@
 use chrono::{DateTime, Utc};
-use miniseed::{ms_record, ms_input};
+use miniseed::{ms_input, ms_record};
 
 pub struct Input {
-    input: ms_input
+    input: ms_input,
 }
 
 impl Input {
@@ -23,7 +23,7 @@ impl Input {
 
 #[derive(Debug)]
 pub struct Trace {
-    rec: ms_record,
+    pub rec: ms_record,
     pub xdata: Vec<f64>,
     pub ydata: Vec<f64>,
 }
@@ -63,11 +63,20 @@ impl Trace {
 
         trace
     }
+
+    pub fn nslc_id(&self) -> String {
+        format!(
+            "{}.{}.{}",
+            self.rec.network(),
+            self.rec.station(),
+            self.rec.location()
+        )
+    }
 }
 
 #[cfg(test)]
 mod tests {
-    use crate::trace::{Trace, Input};
+    use crate::trace::{Input, Trace};
     use miniseed::ms_input;
 
     #[test]
@@ -76,6 +85,5 @@ mod tests {
         let inp = Input::read(file);
         let trs = inp.traces();
         let x = &trs[0];
-
     }
 }
