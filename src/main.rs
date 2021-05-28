@@ -1,3 +1,4 @@
+#![feature(iter_zip)]
 extern crate clap;
 use std::io;
 
@@ -5,12 +6,13 @@ use std::io;
 use clap::load_yaml;
 use clap::App;
 
-mod trace;
 mod tui;
 
 use log::{info, LevelFilter};
 use simplelog::{ColorChoice, Config, TermLogger, TerminalMode};
-use trace::Input;
+// use trace::Input;
+
+use miniseed::MSTraceList;
 
 fn main() -> Result<(), io::Error> {
     TermLogger::init(
@@ -27,9 +29,9 @@ fn main() -> Result<(), io::Error> {
     let file = matches.value_of("FILENAME").unwrap();
 
     info!("Loading file {}", file);
-    let input = Input::read(file);
-
-    tui::start(input).unwrap();
+    let mut traces = MSTraceList::new(file);
+    traces.read();
+    tui::start(traces).unwrap();
 
     Ok(())
 }
