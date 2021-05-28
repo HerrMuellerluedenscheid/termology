@@ -29,7 +29,7 @@ fn main() -> Result<(), io::Error> {
     info!("Loading file {}", file);
     let input = Input::read(file);
 
-    tui::start(input);
+    tui::start(input).unwrap();
 
     Ok(())
 }

@@ -9,6 +9,6 @@ Shortcuts:
 | j          | Scroll down      |
 | k          | Scroll up        |
 | +          | Show more traces |
-| -          | Show less traces |
+| -          | Show fewer traces|
 
 ![](assets/screenshot.png)

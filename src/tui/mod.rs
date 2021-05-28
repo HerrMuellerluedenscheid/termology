@@ -1,6 +1,5 @@
 #![allow(dead_code)]
 mod util;
-use log::info;
 
 use crate::trace::Input;
 use std::{error::Error, io};
