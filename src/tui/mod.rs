@@ -1,7 +1,7 @@
 #![allow(dead_code)]
 mod util;
 
-use miniseed::MSTraceList;
+use libmseed::MSTraceList;
 use std::cmp::Ordering::Equal;
 use std::{error::Error, io};
 use termion::{event::Key, input::MouseTerminal, raw::IntoRawMode, screen::AlternateScreen};

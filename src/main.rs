@@ -12,7 +12,7 @@ use log::{info, LevelFilter};
 use simplelog::{ColorChoice, Config, TermLogger, TerminalMode};
 // use trace::Input;
 
-use miniseed::MSTraceList;
+use libmseed::MSTraceList;
 
 fn main() -> Result<(), io::Error> {
     TermLogger::init(
