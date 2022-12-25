@@ -1,4 +1,3 @@
-#![feature(iter_zip)]
 extern crate clap;
 use std::io;
 
